@@ -1,0 +1,227 @@
+table F_Ventes
+	lineageTag: 95a3d472-22c9-5b14-8d70-071feb60f348
+
+	column LigneID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 1252cb37-e6c9-5f48-9add-9e3b114957ec
+		summarizeBy: none
+		sourceColumn: LigneID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VenteID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 8abbe722-7fda-5b45-ae0e-4d143b598332
+		summarizeBy: none
+		sourceColumn: VenteID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Facture
+		dataType: string
+		lineageTag: 0a9635b8-f2cc-5e8b-a086-a776bafd0dcd
+		summarizeBy: none
+		sourceColumn: Facture
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: d mmmm yyyy
+		lineageTag: 1437b734-7ed5-5e7a-8a1a-5e841edc46c1
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientID
+		dataType: string
+		isHidden
+		lineageTag: 8da96d0a-a7e6-5543-a732-65a06944fa61
+		summarizeBy: none
+		sourceColumn: ClientID
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockID
+		dataType: string
+		isHidden
+		lineageTag: a2f6a89c-9b33-5f32-8112-8308e4c6ac4d
+		summarizeBy: none
+		sourceColumn: StockID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModeleID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 86ea382b-9492-565e-890e-c16fcd592373
+		summarizeBy: none
+		sourceColumn: ModeleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prix de vente'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 93147c72-9fd7-5086-9286-c16843f3f686
+		summarizeBy: sum
+		sourceColumn: PrixVente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Remise
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 710abb4b-72cc-5df8-80e1-dc7ceea10adf
+		summarizeBy: sum
+		sourceColumn: Remise
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coût achat'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 4571ff1b-7600-5ea6-8fef-451ae909bd89
+		summarizeBy: sum
+		sourceColumn: CoutAchat
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Réparations'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: f4ce2c8a-9f8b-5363-a203-57b439775dcf
+		summarizeBy: sum
+		sourceColumn: Reparations
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pièces'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 8ceede5b-fd45-580a-9e9e-17d7f9c960db
+		summarizeBy: sum
+		sourceColumn: Pieces
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transport
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: d2092fc6-028b-5300-b3bd-d40992d629f7
+		summarizeBy: sum
+		sourceColumn: Transport
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coût total'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: b58a9283-e5cd-5b5f-a2a2-b8a879261b6e
+		summarizeBy: sum
+		sourceColumn: CoutTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marge
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 082adf1b-974f-52cb-82d8-fa72c04f00ba
+		summarizeBy: sum
+		sourceColumn: Marge
+
+		annotation SummarizationSetBy = Automatic
+
+	column Couleur
+		dataType: string
+		isHidden
+		lineageTag: 657e0836-26ba-5a06-b81f-e3c287c4618b
+		summarizeBy: none
+		sourceColumn: Couleur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Conduite
+		dataType: string
+		lineageTag: 52cfffb6-2afd-5933-8918-78bc3f4464cb
+		summarizeBy: none
+		sourceColumn: Conduite
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date achat'
+		dataType: dateTime
+		formatString: d mmmm yyyy
+		lineageTag: 854e25e9-93d7-55bc-9ed4-a2258c02b350
+		summarizeBy: none
+		sourceColumn: DateAchat
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Jours en stock'
+		dataType: int64
+		formatString: 0
+		lineageTag: e287ed2f-b188-5167-af94-db91b485b884
+		summarizeBy: none
+		sourceColumn: JoursStock
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gamme de prix'
+		dataType: string
+		lineageTag: 35ae60af-f0f6-5a1c-9790-01f96ce1df51
+		summarizeBy: none
+		sourceColumn: Gamme
+		sortByColumn: 'Ordre gamme'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre gamme'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 3c9d4655-cba0-5ab2-afa9-2067f741cf32
+		summarizeBy: none
+		sourceColumn: GammeOrdre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Ventes = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    Ventes0 = Source{[Schema = "Data", Item = "Sales"]}[Data],
+				    Lignes0 = Source{[Schema = "Data", Item = "SalesDetails"]}[Data],
+				    Stock0 = Source{[Schema = "Data", Item = "Stock"]}[Data],
+				    J1 = Table.NestedJoin(Lignes0, {"SalesID"}, Ventes0, {"SalesID"}, "V", JoinKind.Inner),
+				    E1 = Table.ExpandTableColumn(J1, "V", {"CustomerID", "InvoiceNumber", "SaleDate"}, {"CustomerID", "InvoiceNumber", "SaleDate"}),
+				    J2 = Table.NestedJoin(E1, {"StockID"}, Stock0, {"StockCode"}, "S", JoinKind.Inner),
+				    E2 = Table.ExpandTableColumn(J2, "S", {"ModelID", "Cost", "RepairsCost", "PartsCost", "TransportInCost", "IsRHD", "Color", "DateBought"}, {"ModelID", "Cost", "RepairsCost", "PartsCost", "TransportInCost", "IsRHD", "Color", "DateBought"}),
+				    Gammes = {{25000, "10-25 k£", 1}, {50000, "25-50 k£", 2}, {75000, "50-75 k£", 3}, {100000, "75-100 k£", 4}, {150000, "100-150 k£", 5}, {250000, "150-250 k£", 6}},
+				    GammeDe = (p as number) => let g = List.Select(Gammes, each p <= _{0}) in if List.IsEmpty(g) then {0, "> 250 k£", 7} else g{0},
+				    Lignes = List.Transform(Table.ToRecords(E2), (r) =>
+				        let d = Date.From(r[SaleDate]), a = Date.From(r[DateBought]), p = N(r[SalePrice]),
+				            ca = N(r[Cost]), re = N(r[RepairsCost]), pi = N(r[PartsCost]), tr = N(r[TransportInCost]), g = GammeDe(p)
+				        in [LigneID = Int64.From(r[SalesDetailsID]), VenteID = Int64.From(r[SalesID]), Facture = T(r[InvoiceNumber]),
+				            Date = d, ClientID = T(r[CustomerID]), StockID = T(r[StockID]), ModeleID = if r[ModelID] = null then -1 else Int64.From(r[ModelID]),
+				            PrixVente = p, Remise = N(r[LineItemDiscount]), CoutAchat = ca, Reparations = re, Pieces = pi, Transport = tr,
+				            CoutTotal = ca + re + pi + tr, Marge = p - (ca + re + pi + tr), Couleur = CouleurFr(r[Color]),
+				            Conduite = if r[IsRHD] = true then "Volant à droite" else "Volant à gauche",
+				            DateAchat = a, JoursStock = Duration.Days(d - a), Gamme = g{1}, GammeOrdre = g{2}]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"LigneID", Int64.Type}, {"VenteID", Int64.Type}, {"Facture", type text}, {"Date", type date}, {"ClientID", type text}, {"StockID", type text}, {"ModeleID", Int64.Type}, {"PrixVente", type number}, {"Remise", type number}, {"CoutAchat", type number}, {"Reparations", type number}, {"Pieces", type number}, {"Transport", type number}, {"CoutTotal", type number}, {"Marge", type number}, {"Couleur", type text}, {"Conduite", type text}, {"DateAchat", type date}, {"JoursStock", Int64.Type}, {"Gamme", type text}, {"GammeOrdre", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,100 @@
+table F_Stock
+	lineageTag: d1c2945e-52e0-558b-86db-f289db7df9f9
+
+	column StockID
+		dataType: string
+		isHidden
+		lineageTag: c7d9b228-f4e6-5113-a36d-fb3a52e92d98
+		summarizeBy: none
+		sourceColumn: StockID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModeleID
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: b6b622f2-c225-5841-a2f1-81f5e1450f40
+		summarizeBy: none
+		sourceColumn: ModeleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coût achat'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: 18e0d8bf-ce3a-5576-ae3d-35917e440d77
+		summarizeBy: sum
+		sourceColumn: CoutAchat
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coût total'
+		dataType: double
+		formatString: #,0" £"
+		lineageTag: fef56fbc-763b-5c6f-831e-9931157a7945
+		summarizeBy: sum
+		sourceColumn: CoutTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date achat'
+		dataType: dateTime
+		formatString: d mmmm yyyy
+		lineageTag: eebe9f2b-e57b-54ee-836b-cbe19ff8bf7d
+		summarizeBy: none
+		sourceColumn: DateAchat
+
+		annotation SummarizationSetBy = Automatic
+
+	column Couleur
+		dataType: string
+		isHidden
+		lineageTag: 45e2d178-09da-5b42-9e96-a55b31f3b1e9
+		summarizeBy: none
+		sourceColumn: Couleur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Statut
+		dataType: string
+		lineageTag: 67363041-c351-59ae-8e70-d10d0f8904b5
+		summarizeBy: none
+		sourceColumn: Statut
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Âge (jours)'
+		dataType: int64
+		formatString: 0
+		lineageTag: a84d89fc-9d41-5770-a816-9708de6767ee
+		summarizeBy: none
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_Stock = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    Stock0 = Source{[Schema = "Data", Item = "Stock"]}[Data],
+				    Lignes0 = Source{[Schema = "Data", Item = "SalesDetails"]}[Data],
+				    Vendus = List.Buffer(List.Transform(Lignes0[StockID], each Text.Trim(_))),
+				    Fin = #date(2018, 12, 31),
+				    Lignes = List.Transform(Table.ToRecords(Stock0), (r) =>
+				        let id = T(r[StockCode]), v = List.Contains(Vendus, id), a = Date.From(r[DateBought]),
+				            ca = N(r[Cost]), tot = ca + N(r[RepairsCost]) + N(r[PartsCost]) + N(r[TransportInCost])
+				        in [StockID = id, ModeleID = if r[ModelID] = null then -1 else Int64.From(r[ModelID]), CoutAchat = ca, CoutTotal = tot, DateAchat = a,
+				            Couleur = CouleurFr(r[Color]), Statut = if v then "Vendue" else "En stock",
+				            Age = if v then null else Duration.Days(Fin - a)]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"StockID", type text}, {"ModeleID", Int64.Type}, {"CoutAchat", type number}, {"CoutTotal", type number}, {"DateAchat", type date}, {"Couleur", type text}, {"Statut", type text}, {"Age", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,114 @@
+table D_Date
+	lineageTag: 399cc0e6-0650-57c4-92df-e19e3c8235f4
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		formatString: d mmmm yyyy
+		isKey
+		lineageTag: 065d3139-3843-5e97-bddb-ecc72060e1a0
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Année'
+		dataType: int64
+		formatString: 0
+		lineageTag: 0876e1bf-2478-52b9-9034-660017ea8610
+		summarizeBy: none
+		sourceColumn: Annee
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mois n°'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 1fa55a6c-bc3c-51ea-8ec2-50bed39fee3a
+		summarizeBy: none
+		sourceColumn: MoisN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mois
+		dataType: string
+		lineageTag: 67acc397-4d70-55ea-ad3e-fbc336f108cc
+		summarizeBy: none
+		sourceColumn: Mois
+		sortByColumn: 'Mois n°'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: string
+		lineageTag: 053269ea-edc8-5b16-b4ab-c607a9e0e6c8
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Début du mois'
+		dataType: dateTime
+		formatString: mmm yyyy
+		lineageTag: bc73af29-f67d-5583-a313-95877cb51576
+		summarizeBy: none
+		sourceColumn: DebutMois
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mois et année'
+		dataType: string
+		lineageTag: f5d8d4a5-53b7-5d8b-9d58-7c0c6b143000
+		summarizeBy: none
+		sourceColumn: MoisAnnee
+		sortByColumn: 'Ordre mois et année'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre mois et année'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 845b570a-ea8e-593c-88dd-3d1bba0e1c60
+		summarizeBy: none
+		sourceColumn: MoisAnneeN
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trimestre et année'
+		dataType: string
+		lineageTag: 5be13edc-7636-5b6a-9285-33deafa667e3
+		summarizeBy: none
+		sourceColumn: TrimAnnee
+		sortByColumn: 'Ordre trimestre'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre trimestre'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 4cbd7107-3bf8-5075-bfbe-447860337822
+		summarizeBy: none
+		sourceColumn: TrimAnneeN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Date = m
+		mode: import
+		source =
+				let
+				    Debut = #date(2015, 1, 1),
+				    Jours = List.Dates(Debut, Duration.Days(#date(2018, 12, 31) - Debut) + 1, #duration(1, 0, 0, 0)),
+				    MoisFr = {"Janv.", "Févr.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."},
+				    Lignes = List.Transform(Jours, (d) => let y = Date.Year(d), m = Date.Month(d) in
+				        [Date = d, Annee = y, MoisN = m, Mois = MoisFr{m - 1}, Trimestre = "T" & Text.From(Date.QuarterOfYear(d)),
+				         DebutMois = #date(y, m, 1), MoisAnnee = MoisFr{m - 1} & " " & Text.From(y), MoisAnneeN = y * 100 + m,
+				         TrimAnnee = "T" & Text.From(Date.QuarterOfYear(d)) & " " & Text.From(y), TrimAnneeN = y * 10 + Date.QuarterOfYear(d)]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Date", type date}, {"Annee", Int64.Type}, {"MoisN", Int64.Type}, {"Mois", type text}, {"Trimestre", type text}, {"DebutMois", type date}, {"MoisAnnee", type text}, {"MoisAnneeN", Int64.Type}, {"TrimAnnee", type text}, {"TrimAnneeN", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

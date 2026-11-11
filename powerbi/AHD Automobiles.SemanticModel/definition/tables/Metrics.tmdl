@@ -1,0 +1,1119 @@
+table Metrics
+	lineageTag: 57e90515-6680-5ca5-942b-83c38392cf92
+
+	/// Chiffre d'affaires : somme des prix de vente
+	measure Ventes = SUM ( F_Ventes[Prix de vente] )
+		formatString: #,0" £"
+		displayFolder: 01 Ventes
+		lineageTag: 8ddd1da8-b77b-5c5f-bc7c-dc36174fc4fe
+
+	measure 'Ventes k£' = DIVIDE ( [Ventes], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 01 Ventes
+		lineageTag: ceeab5ef-ece7-501c-8fba-a8b4b67b4c30
+
+	measure 'Ventes M£' = DIVIDE ( [Ventes], 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 01 Ventes
+		lineageTag: 2032fee9-2af2-5d00-a0f2-55d8ed2f0d08
+
+	measure 'Voitures vendues' = COUNTROWS ( F_Ventes )
+		formatString: #,0
+		displayFolder: 01 Ventes
+		lineageTag: 84d1f4a3-e52f-54ab-a127-1b630ff18000
+
+	measure Factures = DISTINCTCOUNT ( F_Ventes[VenteID] )
+		formatString: #,0
+		displayFolder: 01 Ventes
+		lineageTag: c9636128-4d69-5d10-8e5e-a71e4556a01c
+
+	measure 'Prix moyen' = DIVIDE ( [Ventes], [Voitures vendues] )
+		formatString: #,0" £"
+		displayFolder: 01 Ventes
+		lineageTag: 5ef0e5c0-1ab0-5347-9b5a-72086802da33
+
+	measure 'Prix moyen k£' = DIVIDE ( [Prix moyen], 1000 )
+		formatString: #,0.0 "k£"
+		displayFolder: 01 Ventes
+		lineageTag: 5a67c61a-eea6-5748-9e35-501e043be0d4
+
+	measure 'Prix maximum' = MAX ( F_Ventes[Prix de vente] )
+		formatString: #,0" £"
+		displayFolder: 01 Ventes
+		lineageTag: 3363ec31-a7d0-5854-8b76-539321dd3f89
+
+	measure Remises = SUM ( F_Ventes[Remise] )
+		formatString: #,0" £"
+		displayFolder: 01 Ventes
+		lineageTag: 30eb502a-f8bb-57b8-b0c3-c02e744c4c3c
+
+	measure 'Taux de remise' = DIVIDE ( [Remises], [Ventes] )
+		formatString: 0.0 %
+		displayFolder: 01 Ventes
+		lineageTag: 4d8d1218-a949-5b52-a2f5-4ca87b8e9227
+
+	measure 'Clients acheteurs' = DISTINCTCOUNT ( F_Ventes[ClientID] )
+		formatString: #,0
+		displayFolder: 01 Ventes
+		lineageTag: 2b8c3586-1c9c-5fc5-8f38-56f725f3d36f
+
+	/// Nombre de modèles distincts vendus
+	measure 'Modèles vendus' = DISTINCTCOUNT ( F_Ventes[ModeleID] )
+		formatString: #,0
+		displayFolder: 01 Ventes
+		lineageTag: 23b0918d-9b03-5760-a9e9-fcea99f9cf8c
+
+	measure 'Coût de revient' = SUM ( F_Ventes[Coût total] )
+		formatString: #,0" £"
+		displayFolder: 02 Rentabilité
+		lineageTag: 7922091a-b013-56d5-91ce-3ced9146708c
+
+	measure 'Coût achat' = SUM ( F_Ventes[Coût achat] )
+		formatString: #,0" £"
+		displayFolder: 02 Rentabilité
+		lineageTag: aca7a945-15e2-53d6-8b0b-cb228e5461cd
+
+	measure 'Coût achat k£' = DIVIDE ( [Coût achat], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 488aab17-df4a-5ced-a4df-f437d553a08b
+
+	measure 'Réparations k£' = DIVIDE ( SUM ( F_Ventes[Réparations] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: aebf47fe-4ba6-57b1-a20c-10d591a8055b
+
+	measure 'Pièces k£' = DIVIDE ( SUM ( F_Ventes[Pièces] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 269eb3f1-67a9-5d88-861a-7a5833fdc90f
+
+	measure 'Transport k£' = DIVIDE ( SUM ( F_Ventes[Transport] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 1b448e56-f780-54b2-8d51-6bd2f04c68aa
+
+	/// Réparations, pièces et transport
+	measure 'Frais de préparation' = SUM ( F_Ventes[Réparations] ) + SUM ( F_Ventes[Pièces] ) + SUM ( F_Ventes[Transport] )
+		formatString: #,0" £"
+		displayFolder: 02 Rentabilité
+		lineageTag: afd5006d-26fd-57ed-8795-1b3af20f159d
+
+	measure 'Frais de préparation k£' = DIVIDE ( [Frais de préparation], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 1b88d8f7-a089-507e-8560-083d57b80b02
+
+	measure 'Marge brute' = [Ventes] - [Coût de revient]
+		formatString: #,0" £"
+		displayFolder: 02 Rentabilité
+		lineageTag: 18d31539-cf98-5ba2-aa8a-77f8d8118e00
+
+	measure 'Marge brute k£' = DIVIDE ( [Marge brute], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 26e6fa5f-3808-5785-917d-3a385a81fb92
+
+	measure 'Marge brute M£' = DIVIDE ( [Marge brute], 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 02 Rentabilité
+		lineageTag: c8fb1fea-2e21-5028-a719-09d8c2ac1dcb
+
+	measure 'Taux de marge' = DIVIDE ( [Marge brute], [Ventes] )
+		formatString: 0.0 %
+		displayFolder: 02 Rentabilité
+		lineageTag: 2e5e4b94-be46-5f4f-a6a1-6f4f1363239b
+
+	measure 'Marge par voiture' = DIVIDE ( [Marge brute], [Voitures vendues] )
+		formatString: #,0" £"
+		displayFolder: 02 Rentabilité
+		lineageTag: ffd1503a-68af-5df6-959a-44e5f47c4956
+
+	measure 'Marge par voiture k£' = DIVIDE ( [Marge par voiture], 1000 )
+		formatString: #,0.0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 375ffe72-15fb-5927-87b8-64bf50f4ea1c
+
+	measure 'Budget total' = SUM ( F_BudgetTotal[Montant] )
+		formatString: #,0" £"
+		displayFolder: 03 Budget
+		lineageTag: fda1b76e-3f9e-52f4-b459-2d9ad6156c29
+
+	measure 'Budget pays' = SUM ( F_BudgetPays[Montant] )
+		formatString: #,0" £"
+		displayFolder: 03 Budget
+		lineageTag: f2ed0e2f-8f3a-529c-8671-cb37340559b3
+
+	/// Budget global, ou budget par pays dès qu'un pays est filtré
+	measure Budget = IF ( ISCROSSFILTERED ( D_Pays ), [Budget pays], [Budget total] )
+		formatString: #,0" £"
+		displayFolder: 03 Budget
+		lineageTag: b4f78d2e-1574-532a-ac44-8c386e4d816f
+
+	measure 'Budget k£' = DIVIDE ( [Budget], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: b2aa3b80-4567-5a07-a513-77452b686ac2
+
+	measure 'Budget M£' = DIVIDE ( [Budget], 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: ed3f3a4c-89f2-571f-a075-d703e9b64489
+
+	measure 'Écart budget' = IF ( NOT ISBLANK ( [Budget] ), [Ventes] - [Budget] )
+		formatString: #,0" £"
+		displayFolder: 03 Budget
+		lineageTag: 3be67633-c46e-5fd7-bd75-90354335708c
+
+	measure 'Écart budget k£' = DIVIDE ( [Écart budget], 1000 )
+		formatString: +#,0 "k£";-#,0 "k£";0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: aa51d40a-321b-5e39-828b-b7332c6dc9ef
+
+	/// Écart à l'objectif, seulement pour les pays qui ont un objectif
+	measure 'Écart pays k£' = DIVIDE ( IF ( [Écart budget] <> 0, [Écart budget] ), 1000 )
+		formatString: +#,0 "k£";-#,0 "k£";0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: 90c05b86-54fb-5f1c-b45d-5205b5d46e70
+
+	measure 'Écart budget M£' = DIVIDE ( [Écart budget], 1000000 )
+		formatString: +#,0.00 "M£";-#,0.00 "M£";0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: 26db9d25-0876-50ea-aba9-fcf5c8c1b3de
+
+	measure 'Atteinte budget' = DIVIDE ( [Ventes], [Budget] )
+		formatString: 0 %
+		displayFolder: 03 Budget
+		lineageTag: 3c7e9aa1-fad6-55b2-9989-aad2f7a64777
+
+	measure 'Ventes cumulées k£' = DIVIDE ( TOTALYTD ( [Ventes], D_Date[Date] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: b8b6274d-71e5-5cc7-9009-43128c19b98a
+
+	measure 'Budget cumulé k£' = DIVIDE ( TOTALYTD ( [Budget], D_Date[Date] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: 3da5d6ac-b599-5ae0-abac-fe458e4070e1
+
+	measure 'Budget couleur' = CALCULATE ( SUM ( F_BudgetCouleur[Montant] ), TREATAS ( VALUES ( D_Date[Année] ), F_BudgetCouleur[Année] ) )
+		formatString: #,0" £"
+		displayFolder: 03 Budget
+		lineageTag: f80887d9-9db6-5cca-ac03-3f503a790642
+
+	measure 'Budget couleur k£' = DIVIDE ( [Budget couleur], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 03 Budget
+		lineageTag: 97c565bb-5d33-5920-be09-ef950254b5c4
+
+	measure 'Atteinte budget couleur' = DIVIDE ( [Ventes], [Budget couleur] )
+		formatString: 0 %
+		displayFolder: 03 Budget
+		lineageTag: f822b7de-4e80-5b85-980f-f672632e703e
+
+	measure 'Ventes N-1' = CALCULATE ( [Ventes], SAMEPERIODLASTYEAR ( D_Date[Date] ) )
+		formatString: #,0" £"
+		displayFolder: 04 Évolution
+		lineageTag: 5fcea84e-ddce-55ec-b2d7-f642a9335248
+
+	measure 'Ventes N-1 k£' = DIVIDE ( [Ventes N-1], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 04 Évolution
+		lineageTag: 071687ae-4cab-5aa5-84fb-4afdb46c04f1
+
+	measure 'Croissance ventes' = IF ( NOT ISBLANK ( [Ventes N-1] ), DIVIDE ( [Ventes] - [Ventes N-1], [Ventes N-1] ) )
+		formatString: +0.0 %;-0.0 %;0.0 %
+		displayFolder: 04 Évolution
+		lineageTag: 248b4d9e-4ac4-5481-9765-6e429c3098d7
+
+	measure 'Marge N-1' = CALCULATE ( [Marge brute], SAMEPERIODLASTYEAR ( D_Date[Date] ) )
+		formatString: #,0" £"
+		displayFolder: 04 Évolution
+		lineageTag: 82e34348-46aa-57f9-937f-4040d01f5f26
+
+	measure 'Croissance marge' = IF ( NOT ISBLANK ( [Marge N-1] ), DIVIDE ( [Marge brute] - [Marge N-1], [Marge N-1] ) )
+		formatString: +0.0 %;-0.0 %;0.0 %
+		displayFolder: 04 Évolution
+		lineageTag: b6c4a0f6-770b-57ef-bfed-d0ed4a5cddab
+
+	measure 'Voitures N-1' = CALCULATE ( [Voitures vendues], SAMEPERIODLASTYEAR ( D_Date[Date] ) )
+		formatString: #,0
+		displayFolder: 04 Évolution
+		lineageTag: bfd0cc95-e162-5e3a-bca3-3096ce9bb6d8
+
+	measure 'Croissance voitures' = IF ( NOT ISBLANK ( [Voitures N-1] ), DIVIDE ( [Voitures vendues] - [Voitures N-1], [Voitures N-1] ) )
+		formatString: +0.0 %;-0.0 %;0.0 %
+		displayFolder: 04 Évolution
+		lineageTag: 294d709c-d676-543c-897e-4b0891f6d545
+
+	measure 'Prix moyen N-1' = CALCULATE ( [Prix moyen], SAMEPERIODLASTYEAR ( D_Date[Date] ) )
+		formatString: #,0" £"
+		displayFolder: 04 Évolution
+		lineageTag: 9ef16baa-d9c1-5ecb-994b-b301f7382286
+
+	measure 'Croissance prix moyen' = IF ( NOT ISBLANK ( [Prix moyen N-1] ), DIVIDE ( [Prix moyen] - [Prix moyen N-1], [Prix moyen N-1] ) )
+		formatString: +0.0 %;-0.0 %;0.0 %
+		displayFolder: 04 Évolution
+		lineageTag: 79027e95-239a-5be4-9905-d94fabcc46c0
+
+	measure 'Clients N-1' = CALCULATE ( [Clients acheteurs], SAMEPERIODLASTYEAR ( D_Date[Date] ) )
+		formatString: #,0
+		displayFolder: 04 Évolution
+		lineageTag: c9d429df-c073-5262-9233-1d82be788152
+
+	measure 'Clients portefeuille' = COUNTROWS ( D_Client )
+		formatString: #,0
+		displayFolder: 05 Clients
+		lineageTag: 57348476-2af6-5fa6-884e-cbc216f9d86f
+
+	measure 'Ventes par client k£' = DIVIDE ( DIVIDE ( [Ventes], [Clients acheteurs] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 05 Clients
+		lineageTag: bd3ae464-9179-526d-aa30-9decae16504b
+
+	measure 'Ventes revendeurs' = CALCULATE ( [Ventes], D_Client[Type de client] = "Revendeur" )
+		formatString: #,0" £"
+		displayFolder: 05 Clients
+		lineageTag: cc62884e-1adc-57f6-8fa8-640dc3f4949d
+
+	measure 'Part revendeurs' = DIVIDE ( [Ventes revendeurs], [Ventes] )
+		formatString: 0 %
+		displayFolder: 05 Clients
+		lineageTag: 9a08b5f9-87c9-5fb8-87e6-5d2acd33c2c3
+
+	measure 'Ventes clients à risque' = CALCULATE ( [Ventes], D_Client[Risque de crédit] = "Oui" )
+		formatString: #,0" £"
+		displayFolder: 05 Clients
+		lineageTag: 7b5620b3-b53d-54e7-8e03-5cd0f6710865
+
+	measure 'Part clients à risque' = DIVIDE ( [Ventes clients à risque], [Ventes] )
+		formatString: 0.0 %
+		displayFolder: 05 Clients
+		lineageTag: bc09ec3f-6b64-5d17-a628-35fd7b6bdcef
+
+	measure 'Clients à risque' = CALCULATE ( [Clients acheteurs], D_Client[Risque de crédit] = "Oui" ) + 0
+		formatString: #,0
+		displayFolder: 05 Clients
+		lineageTag: 6d28a346-209e-50f4-9355-bbed5b37875f
+
+	measure 'Pays acheteurs' = CALCULATE ( DISTINCTCOUNT ( D_Client[ISO2] ), F_Ventes )
+		formatString: #,0
+		displayFolder: 05 Clients
+		lineageTag: 236a9b61-c0b0-56ce-9730-6ca83a07206c
+
+	measure 'Part des ventes' = DIVIDE ( [Ventes], CALCULATE ( [Ventes], ALLSELECTED ( ) ) )
+		formatString: 0.0 %
+		displayFolder: 05 Clients
+		lineageTag: f1208745-913a-52d3-b75d-ef78118042e1
+
+	measure 'Voitures achetées' = COUNTROWS ( F_Stock )
+		formatString: #,0
+		displayFolder: 06 Stock
+		lineageTag: 62beadc6-4a4e-5fc6-a2b1-37f33bc0494e
+
+	measure 'Voitures en stock' = CALCULATE ( COUNTROWS ( F_Stock ), F_Stock[Statut] = "En stock" ) + 0
+		formatString: #,0
+		displayFolder: 06 Stock
+		lineageTag: ad9d922a-9018-5fda-8c3f-a32d08271b44
+
+	measure 'Valeur du stock' = CALCULATE ( SUM ( F_Stock[Coût total] ), F_Stock[Statut] = "En stock" )
+		formatString: #,0" £"
+		displayFolder: 06 Stock
+		lineageTag: 919edfcd-9d27-5ea8-9f3e-75f5a845bbfb
+
+	measure 'Valeur du stock k£' = DIVIDE ( [Valeur du stock], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 06 Stock
+		lineageTag: b1dfae80-f0f2-56b5-9df9-12c0e80ccb09
+
+	measure 'Valeur du stock M£' = DIVIDE ( [Valeur du stock], 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 06 Stock
+		lineageTag: 9edad2c8-6604-507f-ba62-2dccf3366d6e
+
+	/// Jours entre l'achat et le 31 décembre 2018 pour les voitures non vendues
+	measure 'Âge moyen du stock' = CALCULATE ( AVERAGE ( F_Stock[Âge (jours)] ), F_Stock[Statut] = "En stock" )
+		formatString: 0" j"
+		displayFolder: 06 Stock
+		lineageTag: f0373814-f077-551c-aeec-b2c9440aebad
+
+	measure 'Taux d''écoulement' = DIVIDE ( CALCULATE ( COUNTROWS ( F_Stock ), F_Stock[Statut] = "Vendue" ), [Voitures achetées] )
+		formatString: 0 %
+		displayFolder: 06 Stock
+		lineageTag: 533a8354-8a89-5e6a-b9b6-fce37591d96c
+
+	/// Jours moyens entre l'achat et la vente (lignes cohérentes)
+	measure 'Délai de vente' = AVERAGEX ( FILTER ( F_Ventes, F_Ventes[Jours en stock] >= 0 ), F_Ventes[Jours en stock] )
+		formatString: 0" j"
+		displayFolder: 06 Stock
+		lineageTag: 88bfd9a3-70e4-5af8-9182-bf7ccf703b1b
+
+	measure 'Ventes en 30 jours' = DIVIDE ( COUNTROWS ( FILTER ( F_Ventes, F_Ventes[Jours en stock] >= 0 && F_Ventes[Jours en stock] <= 30 ) ), [Voitures vendues] )
+		formatString: 0 %
+		displayFolder: 06 Stock
+		lineageTag: 18763e61-ee1d-5cae-a5bd-57ac68e34eec
+
+	/// Valeur de l'indicateur choisi dans le sélecteur
+	measure Indicateur = ```
+			VAR s = SELECTEDVALUE ( D_Indicateur[Indicateur], "Ventes" )
+			RETURN SWITCH ( s, "Marge brute", [Marge brute] / 1000, "Voitures vendues", [Voitures vendues], [Ventes] / 1000 )
+			```
+		displayFolder: 07 Classements
+		lineageTag: 5424c34b-8431-51d3-b562-634a2e2c36c9
+
+		formatStringDefinition = SWITCH ( SELECTEDVALUE ( D_Indicateur[Indicateur], "Ventes" ), "Voitures vendues", "#,0", "#,0 ""k£""" )
+
+	measure 'Rang marque' = IF ( ISINSCOPE ( D_Modele[Marque] ), CALCULATE ( RANKX ( ALLSELECTED ( D_Modele[Marque] ), [Indicateur], , DESC, DENSE ), REMOVEFILTERS ( D_Modele[Logo], D_Modele[Origine], D_Modele[Catégorie], D_Modele[Positionnement] ) ) )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: f84f0178-922f-5268-9094-87bd2fa42c2d
+
+	measure 'Indicateur top 10 marques' = IF ( [Rang marque] <= 10, [Indicateur] )
+		displayFolder: 07 Classements
+		lineageTag: 0fe7c2fd-785e-5190-8444-1b14d8838474
+
+		formatStringDefinition = SWITCH ( SELECTEDVALUE ( D_Indicateur[Indicateur], "Ventes" ), "Voitures vendues", "#,0", "#,0 ""k£""" )
+
+	/// Rang sur toutes les colonnes de D_Modele, pour rester juste quand le tableau affiche aussi l'univers
+	measure 'Rang modèle' = IF ( ISINSCOPE ( D_Modele[Modèle complet] ), RANKX ( ALLSELECTED ( D_Modele ), [Ventes], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 9db4baa9-9fd3-5130-8def-b9bccef3602d
+
+	/// Modèles du top 8 des ventes
+	measure 'Top Voitures' = IF ( [Rang modèle] <= 8, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 298660e7-b0fe-52d6-81b4-3a14f4724ff6
+
+	/// Modèles du top 8 des ventes
+	measure 'Top Ventes' = IF ( [Rang modèle] <= 8, [Ventes] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: f53fd8a4-de36-5794-b202-3d5415972018
+
+	/// Modèles du top 8 des ventes
+	measure 'Top Marge' = IF ( [Rang modèle] <= 8, [Marge brute] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 73fad234-3b72-5229-b342-d1558f0f619f
+
+	/// Modèles du top 8 des ventes
+	measure 'Top Taux de marge' = IF ( [Rang modèle] <= 8, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 0c7bd07f-aab8-5b86-9432-8bf5652e877a
+
+	/// Modèles du top 8 des ventes
+	measure 'Top Prix moyen' = IF ( [Rang modèle] <= 8, [Prix moyen] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 72901d07-9c54-5a0b-bf8f-094845e09802
+
+	/// Rang du client, insensible aux colonnes ville, pays et type affichées dans le tableau
+	measure 'Rang client' = IF ( ISINSCOPE ( D_Client[Client] ), RANKX ( ALLSELECTED ( D_Client ), CALCULATE ( [Ventes], ALLSELECTED ( D_Pays ) ), , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 6900f0bf-8abf-51c8-8c1f-4b3bd9fceae2
+
+	/// Clients du top 8 des ventes
+	measure 'TC Voitures' = IF ( [Rang client] <= 8, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 9464af50-09f4-5482-892b-a97fd24a1cd0
+
+	/// Clients du top 8 des ventes
+	measure 'TC Ventes' = IF ( [Rang client] <= 8, [Ventes] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 487ae767-8de7-5df6-8f43-c0077c32fbf6
+
+	/// Clients du top 8 des ventes
+	measure 'TC Marge' = IF ( [Rang client] <= 8, [Marge brute] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: aeeedb04-a3c8-5e5a-97e1-7812cb774cb0
+
+	/// Clients du top 8 des ventes
+	measure 'TC Taux de marge' = IF ( [Rang client] <= 8, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 75a40100-64ec-5408-ae6a-ef51ad265d8e
+
+	measure 'Indicateur titre' = SELECTEDVALUE ( D_Indicateur[Indicateur], "Ventes" )
+		displayFolder: 07 Classements
+		lineageTag: 527fbf71-fb16-5d03-a67b-d4abd953310b
+
+	measure 'Sous-titre ventes' = ```
+			VAR y = SELECTEDVALUE ( D_Date[Année] )
+			VAR c = [Croissance ventes]
+			RETURN
+			    IF (
+			        ISBLANK ( y ),
+			        "Cumul des 4 exercices",
+			        IF ( ISBLANK ( c ), "Premier exercice de la base", IF ( c >= 0, "▲ ", "▼ " ) & FORMAT ( c, "+0.0 %;-0.0 %" ) & " vs " & ( y - 1 ) )
+			    )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: ae26948b-b07a-501a-9c99-2194ca25863b
+
+	measure 'Couleur ventes' = ```
+			VAR c = [Croissance ventes]
+			RETURN IF ( ISBLANK ( c ) || NOT HASONEVALUE ( D_Date[Année] ), "#64748B", IF ( c >= 0, "#16A34A", "#DC2626" ) )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: d889f870-c38d-5c9f-a1cc-6630fd085d46
+
+	measure 'Sous-titre marge' = FORMAT ( [Taux de marge], "0.0 %" ) & " de marge"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: c16e8af9-cd17-51c7-85e4-bace9da9c232
+
+	measure 'Sous-titre voitures' = ```
+			VAR y = SELECTEDVALUE ( D_Date[Année] )
+			VAR c = [Croissance voitures]
+			RETURN
+			    IF (
+			        ISBLANK ( y ),
+			        "Livrées en 4 ans",
+			        IF ( ISBLANK ( c ), "Premier exercice de la base", IF ( c >= 0, "▲ ", "▼ " ) & FORMAT ( c, "+0.0 %;-0.0 %" ) & " vs " & ( y - 1 ) )
+			    )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: d9bb02db-b1d2-5435-9ab3-bbd20471edf3
+
+	measure 'Couleur voitures' = ```
+			VAR c = [Croissance voitures]
+			RETURN IF ( ISBLANK ( c ) || NOT HASONEVALUE ( D_Date[Année] ), "#64748B", IF ( c >= 0, "#16A34A", "#DC2626" ) )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 0776743c-09a7-566d-9461-e8c35cbaca71
+
+	measure 'Sous-titre prix' = ```
+			VAR y = SELECTEDVALUE ( D_Date[Année] )
+			VAR c = [Croissance prix moyen]
+			RETURN
+			    IF (
+			        ISBLANK ( y ),
+			        "Prix moyen sur 4 ans",
+			        IF ( ISBLANK ( c ), "Premier exercice de la base", IF ( c >= 0, "▲ ", "▼ " ) & FORMAT ( c, "+0.0 %;-0.0 %" ) & " vs " & ( y - 1 ) )
+			    )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: daea0284-86ac-504e-8d9d-2a227e16c255
+
+	measure 'Couleur prix' = ```
+			VAR c = [Croissance prix moyen]
+			RETURN IF ( ISBLANK ( c ) || NOT HASONEVALUE ( D_Date[Année] ), "#64748B", IF ( c >= 0, "#16A34A", "#DC2626" ) )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: c27bc6c7-2ba8-5bbc-8d99-78344da1e336
+
+	measure 'Sous-titre budget' = ```
+			VAR e = [Écart budget]
+			RETURN IF ( ISBLANK ( e ), "Pas de budget", IF ( e >= 0, "▲ ", "▼ " ) & FORMAT ( e / 1000, "+#,0;-#,0" ) & " k£ vs budget" )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: adc02b6f-80e3-5efb-be69-5e4ec898d922
+
+	measure 'Couleur budget' = IF ( [Écart budget] >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: a31c54e3-c551-5b35-9c6f-d5a44509cf52
+
+	measure 'Sous-titre clients' = FORMAT ( [Ventes par client k£], "#,0" ) & " k£ par client"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: a4c53f4a-6a2a-5586-a7d9-214cc01b4be7
+
+	measure 'Couleur neutre' = "#64748B"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 3162d4a3-9a74-5564-9e55-34fec4cc967d
+
+	measure 'Couleur écart' = IF ( [Écart budget] >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 982536b6-11c8-5e62-b18b-35915d776a16
+
+	measure 'Couleur atteinte' = IF ( [Atteinte budget] >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 23f0b3c4-12ae-5ba6-9fb8-b79617f2ab0a
+
+	measure 'Couleur marge' = IF ( [Taux de marge] >= 0.15, "#16A34A", IF ( [Taux de marge] >= 0.1, "#9A6B00", "#DC2626" ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 18aba1d1-f222-5dad-9e72-ff6d111c41d6
+
+	measure 'Couleur teinte' = SELECTEDVALUE ( D_Couleur[Teinte], "#2457E6" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 373b3b06-f6b6-5109-9871-4c6261ed16d7
+
+	measure 'Marque choisie' = IF ( HASONEVALUE ( D_Modele[Marque] ), VALUES ( D_Modele[Marque] ), "Toutes les marques" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 6fe50fdc-d420-55c8-b8e6-df1a78503420
+
+	measure 'Fiche marque sous-titre' = ```
+			VAR o = IF ( HASONEVALUE ( D_Modele[Marque] ), VALUES ( D_Modele[Origine] ) )
+			VAR c = IF ( HASONEVALUE ( D_Modele[Marque] ), VALUES ( D_Modele[Positionnement] ) )
+			RETURN IF ( ISBLANK ( o ), "Choisissez une marque", o & " · " & SUBSTITUTE ( c, ", ", " · " ) )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: f6ab79af-5383-5d78-9ea2-49465575fbf2
+
+	measure 'Fiche origine' = IF ( HASONEVALUE ( D_Modele[Marque] ), "Origine : " & SELECTEDVALUE ( D_Modele[Origine] ), "Choisissez une marque" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: fbbc9077-7730-5cd1-87b8-b7c2bb9a2b20
+
+	measure 'Fiche positionnement' = IF ( HASONEVALUE ( D_Modele[Marque] ), SUBSTITUTE ( SELECTEDVALUE ( D_Modele[Positionnement] ), ", ", " · " ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 5f5b2a31-8970-5614-952e-5c71446558f8
+
+	measure 'An2015 Ventes M£' = DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2015 ), 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: 142ab44f-cfbf-554a-84e1-8ee102689da3
+
+	measure 'An2015 Sous-titre' = ```
+			VAR v = CALCULATE ( [Ventes], D_Date[Année] = 2015 )
+			VAR b = CALCULATE ( [Budget], D_Date[Année] = 2015 )
+			VAR a = DIVIDE ( v, b )
+			RETURN IF ( a >= 1, "▲ ", "▼ " ) & FORMAT ( a, "0 %" ) & " de l'objectif"
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 8829fc1a-d4b8-5791-880a-28c2b308d032
+
+	measure 'An2015 Couleur' = IF ( DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2015 ), CALCULATE ( [Budget], D_Date[Année] = 2015 ) ) >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 0800b7e3-ae2a-5f70-a2c1-b26bddf9c0ef
+
+	measure 'An2016 Ventes M£' = DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2016 ), 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: 4cd3e9fb-4223-5351-92bf-cec2a427a1d4
+
+	measure 'An2016 Sous-titre' = ```
+			VAR v = CALCULATE ( [Ventes], D_Date[Année] = 2016 )
+			VAR b = CALCULATE ( [Budget], D_Date[Année] = 2016 )
+			VAR a = DIVIDE ( v, b )
+			RETURN IF ( a >= 1, "▲ ", "▼ " ) & FORMAT ( a, "0 %" ) & " de l'objectif"
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 83c26771-e377-57b4-bf42-44d6a3e3717b
+
+	measure 'An2016 Couleur' = IF ( DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2016 ), CALCULATE ( [Budget], D_Date[Année] = 2016 ) ) >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 94792ab7-cd58-5ac2-9a24-ed370f5de858
+
+	measure 'An2017 Ventes M£' = DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2017 ), 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: 9163a40b-eb4a-5660-be2e-a8c208f9b362
+
+	measure 'An2017 Sous-titre' = ```
+			VAR v = CALCULATE ( [Ventes], D_Date[Année] = 2017 )
+			VAR b = CALCULATE ( [Budget], D_Date[Année] = 2017 )
+			VAR a = DIVIDE ( v, b )
+			RETURN IF ( a >= 1, "▲ ", "▼ " ) & FORMAT ( a, "0 %" ) & " de l'objectif"
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: bb720f41-20ce-5804-a0f9-0d9d3c96c83a
+
+	measure 'An2017 Couleur' = IF ( DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2017 ), CALCULATE ( [Budget], D_Date[Année] = 2017 ) ) >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: f3dad201-490b-588c-aaab-3f9060dadb78
+
+	measure 'An2018 Ventes M£' = DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2018 ), 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: caa3678f-546f-5b89-b1a9-5e58e56e2feb
+
+	measure 'An2018 Sous-titre' = ```
+			VAR v = CALCULATE ( [Ventes], D_Date[Année] = 2018 )
+			VAR b = CALCULATE ( [Budget], D_Date[Année] = 2018 )
+			VAR a = DIVIDE ( v, b )
+			RETURN IF ( a >= 1, "▲ ", "▼ " ) & FORMAT ( a, "0 %" ) & " de l'objectif"
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: f376298d-0052-5902-ae85-a6eee4748fe8
+
+	measure 'An2018 Couleur' = IF ( DIVIDE ( CALCULATE ( [Ventes], D_Date[Année] = 2018 ), CALCULATE ( [Budget], D_Date[Année] = 2018 ) ) >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 84af99e1-9a38-5860-a5e7-8f5fe5721ccc
+
+	measure Cr2016 = CALCULATE ( [Croissance ventes], D_Date[Année] = 2016 )
+		formatString: +0 %;-0.0 %;0 %
+		displayFolder: 04 Évolution
+		lineageTag: df36731b-240a-5e17-968e-505d21c8398d
+
+	measure 'Cr2016 Affiche' = VAR v = CALCULATE ( [Croissance ventes], D_Date[Année] = 2016 ) RETURN IF ( ISBLANK ( v ), BLANK (), IF ( v >= 0, "+" & FORMAT ( v, "0 %" ), FORMAT ( v, "0.0 %" ) ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 4e79692b-811c-5d2a-87a8-9242b53952f0
+
+	measure 'Cr2016 Couleur' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2016 ) >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 97316d3f-1754-5bac-b272-30d526e157c2
+
+	measure 'Cr2016 Texte' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2016 ) >= 0, "▲ vs 2015", "▼ vs 2015" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: db9e02aa-8616-54d1-b5d4-530e4d946702
+
+	measure Cr2017 = CALCULATE ( [Croissance ventes], D_Date[Année] = 2017 )
+		formatString: +0 %;-0.0 %;0 %
+		displayFolder: 04 Évolution
+		lineageTag: 1d36d98e-a8c3-586e-b25c-ec3eeeaee682
+
+	measure 'Cr2017 Affiche' = VAR v = CALCULATE ( [Croissance ventes], D_Date[Année] = 2017 ) RETURN IF ( ISBLANK ( v ), BLANK (), IF ( v >= 0, "+" & FORMAT ( v, "0 %" ), FORMAT ( v, "0.0 %" ) ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 76fb99cc-7f85-50d8-804b-37fa3f961904
+
+	measure 'Cr2017 Couleur' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2017 ) >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 8d0e8d16-004b-553c-9adc-6da4146a2eea
+
+	measure 'Cr2017 Texte' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2017 ) >= 0, "▲ vs 2016", "▼ vs 2016" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 515c8a59-23c5-5102-897e-9bf6f91b645e
+
+	measure Cr2018 = CALCULATE ( [Croissance ventes], D_Date[Année] = 2018 )
+		formatString: +0 %;-0.0 %;0 %
+		displayFolder: 04 Évolution
+		lineageTag: 7d4e335a-8c62-5d32-8d74-c60c10e582af
+
+	measure 'Cr2018 Affiche' = VAR v = CALCULATE ( [Croissance ventes], D_Date[Année] = 2018 ) RETURN IF ( ISBLANK ( v ), BLANK (), IF ( v >= 0, "+" & FORMAT ( v, "0 %" ), FORMAT ( v, "0.0 %" ) ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: bc579dee-2028-5ecf-b6c2-f92c8050de2c
+
+	measure 'Cr2018 Couleur' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2018 ) >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: b5bdd0ac-56ab-5621-99c7-c3da983445a6
+
+	measure 'Cr2018 Texte' = IF ( CALCULATE ( [Croissance ventes], D_Date[Année] = 2018 ) >= 0, "▲ vs 2017", "▼ vs 2017" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 9b8217f9-bf7a-5c67-82ab-a08de36bb158
+
+	/// Ventes des modèles présents au catalogue
+	measure 'Ventes catalogue k£' = DIVIDE ( CALCULATE ( [Ventes], KEEPFILTERS ( D_Modele[Marque] <> "Non référencée" ) ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 01 Ventes
+		lineageTag: 89f55206-de95-5209-b7c2-cfe8b8135ef5
+
+	measure 'Part marque' = DIVIDE ( [Ventes], CALCULATE ( [Ventes], REMOVEFILTERS ( D_Modele ) ) )
+		formatString: 0.0 %
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 47fe5666-16bc-542c-9eaa-7005fcfc879d
+
+	measure 'Sous-titre part marque' = FORMAT ( [Part marque], "0.0 %" ) & " des ventes"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 2cd78f22-8b1c-501e-bd6a-b703522197ce
+
+	measure 'Sous-titre marge par voiture' = FORMAT ( [Marge par voiture] / 1000, "#,0.0" ) & " k£ par voiture"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: ff8469db-38a1-57fd-853f-f107d526b52f
+
+	measure 'Rang marque ventes' = IF ( HASONEVALUE ( D_Modele[Marque] ), RANKX ( ALL ( D_Modele[Marque] ), [Ventes], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 08 Textes et couleurs
+		lineageTag: b4386201-377b-56ca-96a6-3136081599f1
+
+	measure 'Sous-titre rang' = ```
+			VAR r = [Rang marque ventes]
+			VAR n = COUNTROWS ( FILTER ( ALL ( D_Modele[Marque] ), NOT ISBLANK ( CALCULATE ( [Ventes] ) ) ) )
+			RETURN IF ( ISBLANK ( r ), "", "sur " & n & " marques" )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: ab79cc8c-5eb9-516a-9336-db74643e8dbd
+
+	measure 'Rang marque texte' = ```
+			VAR r = [Rang marque ventes]
+			RETURN IF ( ISBLANK ( r ), "-", IF ( r = 1, "1re", r & "e" ) )
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: cb0bedc6-d413-5d49-8ce2-ff77a12fc5a0
+
+	measure 'Sous-titre stock' = FORMAT ( [Valeur du stock], "#,0" ) & " £ immobilisés"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 0f13022e-99ee-5eba-87eb-368115cb9719
+
+	measure 'Sous-titre délai' = FORMAT ( [Ventes en 30 jours], "0 %" ) & " vendues sous 30 j"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: b1d5ad7b-95a8-5494-9324-9c0240cf5566
+
+	measure 'Rang stock' = IF ( ISINSCOPE ( D_Modele[Marque] ), CALCULATE ( RANKX ( ALLSELECTED ( D_Modele[Marque] ), [Valeur du stock], , DESC, DENSE ), REMOVEFILTERS ( D_Modele[Logo], D_Modele[Origine], D_Modele[Catégorie], D_Modele[Positionnement] ) ) )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 9a61ca84-3714-5b38-9e97-29b992f770a8
+
+	/// Les 8 marques qui immobilisent le plus de stock
+	measure 'Stock top 8 k£' = DIVIDE ( IF ( [Rang stock] <= 8, [Valeur du stock] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 46e5e9f8-151a-519e-a563-ba8daf4435e8
+
+	measure 'Marque n°1' = MAXX ( TOPN ( 1, VALUES ( D_Modele[Marque] ), [Ventes], DESC ), D_Modele[Marque] )
+		displayFolder: 07 Classements
+		lineageTag: 6dd99349-eb3d-58d0-8420-2af5a2cf9342
+
+	measure 'Sous-titre marque n°1' = ```
+			VAR v = MAXX ( TOPN ( 1, VALUES ( D_Modele[Marque] ), [Ventes], DESC ), [Ventes] )
+			RETURN FORMAT ( v / 1000, "#,0" ) & " k£ · " & FORMAT ( DIVIDE ( v, [Ventes] ), "0 %" ) & " des ventes"
+			```
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 0b07c209-8d0f-506f-945a-7996208ca414
+
+	measure 'Sous-titre modèles' = "sur " & CALCULATE ( COUNTROWS ( D_Modele ), REMOVEFILTERS ( D_Modele ) ) & " modèles au catalogue"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 09c625d0-216a-56fe-99ff-f5ef42e536e7
+
+	measure 'Sous-titre marge brute' = FORMAT ( [Marge brute] / 1000000, "#,0.00" ) & " M£ de marge brute"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 759f503d-f06a-50a9-b621-c12d0459eadf
+
+	measure 'Sous-titre objectif' = "Objectif de ventes fixé"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 2dd02ad8-64f7-5b0e-80b8-b3eca9729735
+
+	measure 'Sous-titre atteinte' = FORMAT ( [Atteinte budget], "0 %" ) & " du budget atteint"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: f66c553e-f7c4-50d2-83ec-5c9a56b6a7e1
+
+	measure 'Remises k£' = DIVIDE ( [Remises], 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 01 Ventes
+		lineageTag: 1536d11c-6b1f-5e7d-b16b-63e7bb4f0f0c
+
+	measure 'Sous-titre remises' = FORMAT ( [Taux de remise], "0.0 %" ) & " du chiffre d'affaires"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 26ae8bd0-cd29-53c4-945f-8ecaa8d3a037
+
+	measure 'Sous-titre portefeuille' = "sur " & CALCULATE ( COUNTROWS ( D_Client ), REMOVEFILTERS ( ) ) & " clients en portefeuille"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 29bc84d3-03e7-5b48-933d-9f1d3542726d
+
+	measure 'Sous-titre factures' = FORMAT ( [Factures], "#,0" ) & " factures émises"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 76db5ef5-7750-5f01-a0be-8f91fbd309db
+
+	measure 'Sous-titre revendeurs' = FORMAT ( [Ventes revendeurs] / 1000000, "#,0.00" ) & " M£ via les revendeurs"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 6613bf67-fd34-5995-9eaf-ad06cb98b1c8
+
+	measure 'Sous-titre risque' = FORMAT ( [Part clients à risque], "0.0 %" ) & " des ventes"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: ce1dcff7-60ab-5414-8fe6-4011ac651b69
+
+	measure 'Sous-titre pays' = "sur " & CALCULATE ( DISTINCTCOUNT ( D_Pays[Région] ), F_Ventes ) & " continents"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 1bf7480c-0910-5cd6-b85b-23e725f06356
+
+	measure 'Sous-titre âge' = "âge moyen : " & FORMAT ( [Âge moyen du stock], "0" ) & " jours"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 239bd37d-6925-590c-bfdf-c3e5edde7516
+
+	measure 'Sous-titre écoulement' = FORMAT ( [Voitures achetées], "#,0" ) & " voitures achetées"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 1fdf5815-2bb9-595a-9abd-32fc0351d343
+
+	measure 'Sous-titre frais' = FORMAT ( DIVIDE ( [Frais de préparation], [Coût de revient] ), "0.0 %" ) & " du coût de revient"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 8ac8e996-526f-5283-9125-476f86e98ef6
+
+	measure 'Stock marque' = CALCULATE ( COUNTROWS ( F_Stock ), F_Stock[Statut] = "En stock" ) + 0
+		formatString: #,0
+		displayFolder: 06 Stock
+		lineageTag: 665fb21e-f2b1-53c6-ad41-7cd791c734c7
+
+	measure 'Sous-titre voitures vendues' = "sur " & FORMAT ( [Voitures vendues], "#,0" ) & " voitures vendues"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 34936e4b-4758-547e-9874-a4cdc4ee51a4
+
+	measure 'Couleur taux marge' = IF ( [Taux de marge] >= 0.15, "#16A34A", IF ( [Taux de marge] >= 0.1, "#9A6B00", "#DC2626" ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 4b1e1fa5-06d7-5fb4-9dea-a92d3aefc91d
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Rang' = IF ( [Rang marque] <= 12, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: e80a32e8-089f-56e9-b36d-d020abd46782
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Voitures' = IF ( [Rang marque] <= 12, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 00d15dcf-119c-59d0-a7e4-bb254a0fe0dc
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Ventes' = IF ( [Rang marque] <= 12, [Ventes] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 86711c0f-c431-5c8b-9c4a-a7d5546daefa
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Ventes k£' = DIVIDE ( IF ( [Rang marque] <= 12, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 62538fe6-d596-559e-a3d9-35d41baa1dd7
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Marge' = IF ( [Rang marque] <= 12, [Marge brute] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 64afb432-667f-5c19-b6a9-7122eb830e35
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Taux' = IF ( [Rang marque] <= 12, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 0f0e9997-b42a-55e8-aa76-e18b4e62f561
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Prix moyen' = IF ( [Rang marque] <= 12, [Prix moyen] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 9a0fbd55-051a-564c-bc1a-1e3fae9aab60
+
+	/// Palmarès : les 12 premières marques selon l'indicateur choisi
+	measure 'PM Part' = IF ( [Rang marque] <= 12, [Part des ventes] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: b9597388-409d-55a2-9ffb-728a25440a4b
+
+	/// Les 8 marques qui immobilisent le plus de stock
+	measure 'ST Voitures' = IF ( [Rang stock] <= 8 && NOT ISBLANK ( [Valeur du stock] ), [Stock marque] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 9de014bc-940d-5de4-b834-d1e921297d83
+
+	/// Les 8 marques qui immobilisent le plus de stock
+	measure 'ST Valeur' = IF ( [Rang stock] <= 8 && NOT ISBLANK ( [Valeur du stock] ), [Valeur du stock] )
+		formatString: #,0" £"
+		displayFolder: 07 Classements
+		lineageTag: 373aafb1-bbab-5a19-953a-e33b5500bdae
+
+	/// Les 8 marques qui immobilisent le plus de stock
+	measure 'ST Âge' = IF ( [Rang stock] <= 8 && NOT ISBLANK ( [Valeur du stock] ), [Âge moyen du stock] )
+		formatString: 0" j"
+		displayFolder: 07 Classements
+		lineageTag: f797aaab-d182-510b-ba7b-ce82808ee84d
+
+	/// Taux de marge des marques ayant vendu au moins 5 voitures
+	measure 'Taux de marge 5 ventes' = IF ( [Voitures vendues] >= 5, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 02 Rentabilité
+		lineageTag: e85c9282-b69b-5176-b8a2-5410dffe467a
+
+	measure 'Couleur pastille' = SELECTEDVALUE ( D_Couleur[Teinte], "#64748B" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: a238a492-1248-58b4-844d-431f17245fdb
+
+	measure 'Couleur atteinte couleur' = IF ( [Atteinte budget couleur] >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 323a2f5e-1e34-5a0f-acf1-7d1151777571
+
+	measure 'Part voitures' = DIVIDE ( [Voitures vendues], CALCULATE ( [Voitures vendues], ALLSELECTED ( ) ) )
+		formatString: 0.0 %
+		displayFolder: 05 Clients
+		lineageTag: 4b80deb6-ee00-5716-9108-725f2464f6f2
+
+	measure 'T couleur écart' = IF ( [Écart budget] >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 5abd81eb-119c-5bcc-898b-f852153c5770
+
+	measure 'T couleur atteinte' = IF ( [Atteinte budget] >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 7f0c3a9b-6adc-5eaa-b4f1-c65463735c22
+
+	measure 'T couleur atteinte couleur' = IF ( [Atteinte budget couleur] >= 1, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 0b847da3-d0cd-5f9e-a1b1-7c7d24f07110
+
+	measure 'T couleur taux marge' = IF ( [Taux de marge] >= 0.15, "#16A34A", IF ( [Taux de marge] >= 0.1, "#9A6B00", "#DC2626" ) )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 69e0992d-8a9a-5711-8671-3011323bf4d7
+
+	measure 'Couleur blanc' = "#FFFFFF"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 58fd7c65-956c-5750-abba-cb7d9f7bbd10
+
+	measure 'Couleur marine' = "#0B1F3A"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: daa240c3-c60a-5c86-93c5-1bc454e87580
+
+	measure 'Couleur gris' = "#5B6B80"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 896d51ab-5cb2-56f2-8490-7e81cb1ee178
+
+	/// Montant de chaque étape, du coût d'achat au prix de vente
+	measure 'Montant étape k£' = ```
+			DIVIDE ( SWITCH ( SELECTEDVALUE ( D_Etape[Étape] ),
+			    "Coût d'achat", [Coût achat],
+			    "Réparations", SUM ( F_Ventes[Réparations] ),
+			    "Pièces", SUM ( F_Ventes[Pièces] ),
+			    "Transport", SUM ( F_Ventes[Transport] ),
+			    "Marge brute", [Marge brute] ), 1000 )
+			```
+		formatString: #,0 "k£"
+		displayFolder: 02 Rentabilité
+		lineageTag: 42c8265b-c704-5d58-a350-313f063ee68b
+
+	measure 'Jauge max M£' = DIVIDE ( MAX ( [Ventes M£], [Budget M£] ) * 1.25, 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: c8e89851-676d-51cb-b813-587701272fa9
+
+	measure 'Jauge min M£' = DIVIDE ( 0, 1000000 )
+		formatString: #,0.00 "M£"
+		displayFolder: 03 Budget
+		lineageTag: e62c2790-a548-5908-a983-48d841eba135
+
+	/// Les 8 modèles qui rapportent le plus
+	measure 'Top8 modèles k£' = DIVIDE ( IF ( [Rang modèle] <= 8, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: ca47d016-ffa2-512c-a2cf-9465c10400a7
+
+	/// Les 8 meilleurs clients
+	measure 'Top8 clients k£' = DIVIDE ( IF ( [Rang client] <= 8, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: b0058260-99ea-5a35-b202-ab284bdec1dd
+
+	/// Les 6 premières marques
+	measure 'P6 Rang' = IF ( [Rang marque] <= 6, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 00ee5469-7db6-5a6a-8d8a-e3783e89df3a
+
+	/// Les 6 premières marques
+	measure 'P6 Ventes k£' = DIVIDE ( IF ( [Rang marque] <= 6, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 154f21a9-9f2c-5f35-8739-a8f4e6aa79bb
+
+	measure 'Couleur pays' = SWITCH ( SELECTEDVALUE ( D_Pays[Pays] ), "Royaume-Uni", "#2563EB", "France", "#E11D48", "États-Unis", "#7C3AED", "Espagne", "#F59E0B", "Italie", "#16A34A", "Allemagne", "#0F766E", "Suisse", "#DB2777", "Belgique", "#CA8A04", "#64748B" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: b934c025-d7be-5ee2-abaa-9a9fc6715c5f
+
+	measure 'Couleur origine' = SWITCH ( SELECTEDVALUE ( D_Modele[Origine] ), "Royaume-Uni", "#2563EB", "Italie", "#16A34A", "France", "#E11D48", "Allemagne", "#0F766E", "États-Unis", "#7C3AED", "#94A3B8" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: a9a465be-0942-5779-9e48-5bafb03b92ab
+
+	measure 'T couleur croissance' = IF ( [Croissance ventes] >= 0, "#16A34A", "#DC2626" )
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 67ad6fce-39f2-5090-b8b6-b0d72a2a8e73
+
+	/// Évolution des ventes par rapport à l'exercice précédent
+	measure 'Croissance ventes %' = [Croissance ventes]
+		formatString: +0.0 %;-0.0 %;0.0 %
+		displayFolder: 04 Évolution
+		lineageTag: 9b5f5800-b138-56ec-9fb2-77090d417084
+
+	measure 'Couleur barre' = "#111317"
+		displayFolder: 08 Textes et couleurs
+		lineageTag: 2e9796ca-90f9-5cda-950f-a464631ab376
+
+	/// Rangs 1 à 3
+	measure 'RA Rang' = IF ( [Rang marque] >= 1 && [Rang marque] <= 3, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: d9df5108-acef-551f-9b41-705c8602e625
+
+	/// Rangs 1 à 3
+	measure 'RA Voitures' = IF ( [Rang marque] >= 1 && [Rang marque] <= 3, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 98cdeb3f-abb6-5409-8df7-4babe4adc884
+
+	/// Rangs 1 à 3
+	measure 'RA Ventes k£' = DIVIDE ( IF ( [Rang marque] >= 1 && [Rang marque] <= 3, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 9d8e928f-67b2-550e-aca5-7ee124279dce
+
+	/// Rangs 1 à 3
+	measure 'RA Taux' = IF ( [Rang marque] >= 1 && [Rang marque] <= 3, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 18cd03e6-4fb3-5073-aed6-9e15f2160f05
+
+	/// Rangs 4 à 6
+	measure 'RB Rang' = IF ( [Rang marque] >= 4 && [Rang marque] <= 6, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 6fac5cc7-b17c-5332-94f6-e9707cd75f8b
+
+	/// Rangs 4 à 6
+	measure 'RB Voitures' = IF ( [Rang marque] >= 4 && [Rang marque] <= 6, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 4c947ffa-f228-51ea-a0b4-9e5a4bea9802
+
+	/// Rangs 4 à 6
+	measure 'RB Ventes k£' = DIVIDE ( IF ( [Rang marque] >= 4 && [Rang marque] <= 6, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 624b00a9-16d4-5421-ad7f-95b614dcb546
+
+	/// Rangs 4 à 6
+	measure 'RB Taux' = IF ( [Rang marque] >= 4 && [Rang marque] <= 6, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 0b7be892-7482-5254-92cd-9489289c5edb
+
+	/// Rangs 1 à 6
+	measure 'RC Rang' = IF ( [Rang marque] >= 1 && [Rang marque] <= 6, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 0be003c6-9a47-5b1a-b209-965a843bd686
+
+	/// Rangs 1 à 6
+	measure 'RC Voitures' = IF ( [Rang marque] >= 1 && [Rang marque] <= 6, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 49694ead-f7ba-52e1-ae75-ddebac8a56e3
+
+	/// Rangs 1 à 6
+	measure 'RC Ventes k£' = DIVIDE ( IF ( [Rang marque] >= 1 && [Rang marque] <= 6, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 862b2090-2eaf-5cb8-995e-4039c23efd48
+
+	/// Rangs 1 à 6
+	measure 'RC Taux' = IF ( [Rang marque] >= 1 && [Rang marque] <= 6, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: d2f04f2a-602c-5994-86aa-d2a347fe7c6e
+
+	/// Rangs 7 à 12
+	measure 'RD Rang' = IF ( [Rang marque] >= 7 && [Rang marque] <= 12, [Rang marque] )
+		formatString: 0
+		displayFolder: 07 Classements
+		lineageTag: 9872db1b-8684-5bda-89ca-33a002f36ad2
+
+	/// Rangs 7 à 12
+	measure 'RD Voitures' = IF ( [Rang marque] >= 7 && [Rang marque] <= 12, [Voitures vendues] )
+		formatString: #,0
+		displayFolder: 07 Classements
+		lineageTag: 6b706f80-be14-52d8-9f1d-48966ce7fce1
+
+	/// Rangs 7 à 12
+	measure 'RD Ventes k£' = DIVIDE ( IF ( [Rang marque] >= 7 && [Rang marque] <= 12, [Ventes] ), 1000 )
+		formatString: #,0 "k£"
+		displayFolder: 07 Classements
+		lineageTag: 8bc794a2-5ab6-51c6-8aae-fdf2095367ed
+
+	/// Rangs 7 à 12
+	measure 'RD Taux' = IF ( [Rang marque] >= 7 && [Rang marque] <= 12, [Taux de marge] )
+		formatString: 0.0 %
+		displayFolder: 07 Classements
+		lineageTag: 6095bb06-8d57-5956-aabb-5208c84f5ce7
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: d8792c8a-eb26-58a7-96e4-3a2b130b1380
+		summarizeBy: none
+		sourceColumn: [Placeholder]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metrics = calculated
+		mode: import
+		source = ROW ( "Placeholder", "" )
+
+	annotation PBI_Id = Metrics

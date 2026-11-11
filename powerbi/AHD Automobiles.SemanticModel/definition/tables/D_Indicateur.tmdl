@@ -1,0 +1,31 @@
+table D_Indicateur
+	lineageTag: c87ab119-f9da-56c7-a15a-d8abe2e9927a
+
+	column Indicateur
+		dataType: string
+		lineageTag: bb414851-6ba7-5de2-847c-4bf40ce8cf52
+		summarizeBy: none
+		sourceColumn: Indicateur
+		sortByColumn: 'Ordre indicateur'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre indicateur'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: c7b22607-a72e-5adb-ad37-f562283ec139
+		summarizeBy: none
+		sourceColumn: Ordre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Indicateur = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [Indicateur = text, Ordre = Int64.Type], {{"Ventes", 1}, {"Marge brute", 2}, {"Voitures vendues", 3}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,54 @@
+table D_Couleur
+	lineageTag: a0ceac98-7502-5154-8356-04020d1ee234
+
+	column Couleur
+		dataType: string
+		lineageTag: 0d195692-00f2-524e-b59d-e4ee524f6e7f
+		summarizeBy: none
+		sourceColumn: Couleur
+		sortByColumn: 'Ordre couleur'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Teinte
+		dataType: string
+		isHidden
+		lineageTag: 380b35fd-0e03-569d-b1cd-f4b36574537d
+		summarizeBy: none
+		sourceColumn: Teinte
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre couleur'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: a43cb901-44ce-5e40-9e13-7a6fbb5e7825
+		summarizeBy: none
+		sourceColumn: Ordre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pastille
+		dataType: string
+		dataCategory: ImageUrl
+		lineageTag: b4b181a8-73c3-56a7-92ce-2847e14c62ec
+		summarizeBy: none
+		sourceColumn: Pastille
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Couleur = m
+		mode: import
+		source =
+				let
+				    Pastilles = [#"Noir" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5ElEQVR42u2aLRJCMQwGk847DgMKg+QaOBSG02BQOK6BxKBguA9cAPqToUPb7Pr3Jt8mVYkIAAAAAAAA+EMtH12uj1ergdaruVYT0HJwqwi1ht/vts2FPhxPxRK0NHyLwWMiUhI0N3wPwb+JiEkIo7x5a46Q84Meu59b92Tt/vN+29QqfLZYnmtMwaenEEbtfm79QZwztTSm/8D9BCAAAQhAAAIQgAAEIAABCEAAAhCAAAQgQBLrJul0OVIsoHTLKp0uS8MvLPba/aSAUaYgloPtsHAfIFyIiOMbIQAAAAAAAJe8Ab+vVSbmAS0GAAAAAElFTkSuQmCC", #"Rouge" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5klEQVR42u2avQ1CMQwG7ehVDENDgYREwxpsgBgHsQFr0CAhUdAwDC0sAPmxiEjiu/49+Ts7lS0CAAAAAAAA/lDLR+fr49VqoM1qrtUEtBzcKkKt4Wf7XXOhn4djsQQtDd9i8JiIlATNDd9D8G8iYhLCKG/emiPk/KDH7ufWPVm7v7xftrUKvy3WpxpT8OkphFG7n1t/EOdMLY3pP3A/AQhAAAIQgAAEIAABCEAAAhCAAAQgAAEIkMS6STpdjhQLKN2ySqfL0vALi712PylglCmI5WA7LNwHCBci4vhGCAAAAAAAwCVvasxVz5MHrTIAAAAASUVORK5CYII=", #"Bleu" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA50lEQVR42u2avQ1CMQwG7ejVjMIAIBqWoGAJJqBgApagYAkaBAMwCgvAApAfi4gkvuvfk7+zU9kiAAAAAAAA4A+1fHS5P16tBlov5lpNQMvBrSLUGn5/fjYX+rCZFUvQ0vAtBo+JSEnQ3PA9BP8mIiYhjPLmrTlCzg967H5u3ZO1+9fjclur8NXudqoxBZ+eQhi1+7n1B3HO1NKY/gP3E4AABCAAAQhAAAIQgAAEIAABCEAAAhCAAEmsm6TT5UixgNItq3S6LA2/sNhr95MCRpmCWA62w8J9gHAhIo5vhAAAAAAAAFzyBgQcVgjs38cYAAAAAElFTkSuQmCC", #"Vert anglais" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5UlEQVR42u2arRECQQxGk50rhAooAImjhlN4NEWg8airAYekACqgE2gA9m/YIbt5z99NvpesSkQAAAAAAADAH1rz0e3+eFkNtN2stZkAy8FrRWht+P1yNBf6Mp+KJWhpeIvBYyJSEjQ3fA/Bv4mISQijvPnaHCHnBz12P7fuqbb7z/N1blX46rBbWkzBp6cQRu1+bv1BnDNZGtN/4H4CEIAABCAAAQhAAAIQgAAEIAABCEAAAhAgiXWTdLocKRZQumWVTpel4RcWe+1+UsAoUxDLwXZYuA8QLkTE8Y0QAAAAAACAS94plFVrCQhMMgAAAABJRU5ErkJggg==", #"Argent" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA20lEQVR42u2avRHCMAxGJcExTkoK6FiD+ViDjhSUGYc7DibAPzoCsv1en5y+Z9mNJAIAAAAAAADjoZ6PrvPyihrodJh0NQGRg3tFqDf8bhPPxeOp1RK0NnzE4CkROQlaGr6F4J9EpCRYL3fem8NKftDi6ZfWrd57f9xP57UKv92Xy6/eA+v19EvrNxmcbYQ2/SfDdwACEIAABCAAAQhAAAIQgAAEIAABCEAAAiQzbpJGhyPVAmqnrNLosNS+YbHV088K6KULUjmYDgv7AcKGiAy8IwQAAAAAADAkb2ygVp9LbrX4AAAAAElFTkSuQmCC", #"Bleu nuit" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5UlEQVR42u2avQ1CMQwG7ejtwQaImpI1KKClZwx6WihYg5IasQGTwAKQH4uIJL7r35O/s1PZIgAAAAAAAOAPtXx0vT1erQZaLedaTUDLwa0i1Bp+uzs0F/p03BdL0NLwLQaPiUhJ0NzwPQT/JiImIYzy5q05Qs4Peux+bt2TtfvP+3ldq/DZYnOpMQWfnkIYtfu59QdxztTSmP4D9xOAAAQgAAEIQAACEIAABCAAAQhAAAIQgABJrJuk0+VIsYDSLat0uiwNv7DYa/eTAkaZglgOtsPCfYBwISKOb4QAAAAAAABc8gaUhFVEVFWdSgAAAABJRU5ErkJggg==", #"Vert" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA50lEQVR42u2avQ1CMQwG7ejNQskAVIg1KBArsABiAVZAFKyBqBiAkmVgAciPRUQS3/Xvyd/ZqWwRAAAAAAAA8IdaPrreH69WA60Wc60moOXgVhFqDX94HpsLvZ/tiiVoafgWg8dEpCRobvgegn8TEZMQRnnz1hwh5wc9dj+37sna/dvmtK5V+PK8vdSYgk9PIYza/dz6gzhnamlM/4H7CUAAAhCAAAQgAAEIQAACEIAABCAAAQhAgCTWTdLpcqRYQOmWVTpdloZfWOy1+0kBo0xBLAfbYeE+QLgQEcc3QgAAAAAAAC55A6+dVdj+gM9sAAAAAElFTkSuQmCC", #"Jaune canari" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5ElEQVR42u2aPQoCMRBGJyGtVxEEqwUbryF4OMFrbCNYCQtexVbQC2j+MDjJvNfvMt+bSTUjAgAAAAAAAPZwNR/N1/tLa6D9tHbNBGgOXivC1YbfPo/qQt/CqViCKw2vMXhMREqCyw3fQ/BvImIS/ChvvjaHz/lBj93PrTvUdn+1Ww6tCn9cNucWU/DpKfhRu59bvxfjBE1j+g/MTwACEIAABCAAAQhAAAIQgAAEIAABCEAAAiSxbpJOlyPFAkq3rNLpstT/wmKv3U8KGGUKYjnYDgv3AcKFiBi+EQIAAAAAADDJGz6iVn14vvYfAAAAAElFTkSuQmCC", #"Pourpre" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5UlEQVR42u2arRFCQQwGk5vXDhSApAYcDoFBUQkKg8DhqAFJAVAQNAD3k+GGu8uuf2/ybXIqEQEAAAAAAAB/qOWj2/3xajXQcjHXagJaDm4Vodbw1+25udCr06ZYgpaGbzF4TERKguaG7yH4NxExCWGUN2/NEXJ+0GP3c+uerN0/Pg/rWoXvZvtLjSn49BTCqN3PrT+Ic6aWxvQfuJ8ABCAAAQhAAAIQgAAEIAABCEAAAhCAAARIYt0knS5HigWUblml02Vp+IXFXrufFDDKFMRysB0W7gOECxFxfCMEAAAAAADgkjea9FWfSeQeRQAAAABJRU5ErkJggg==", #"Rose" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA50lEQVR42u2avQ1CMQwG7ehNQUFLR4tEScsILMEoLMEItJRItHS0FKwBC0B+LCKS+K5/T/7OTmWLAAAAAAAAgD/U8tH5cnu1GmizXmo1AS0Ht4pQa/jF9dFc6PtqXixBS8O3GDwmIiVBc8P3EPybiJiEMMqbt+YIOT/osfu5dU/W7s/2212twp+H07HGFHx6CmHU7ufWH8Q5U0tj+g/cTwACEIAABCAAAQhAAAIQgAAEIAABCEAAAiSxbpJOlyPFAkq3rNLpsjT8wmKv3U8KGGUKYjnYDgv3AcKFiDi+EQIAAAAAAHDJGyD1VsGv2C+/AAAAAElFTkSuQmCC", #"Non renseignée" = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAA5ElEQVR42u2avQ1CMQwG7egNggQ1A1DSMwG0TEULE9BTMgA1SGwCC0B+LCKS+K5/T/7OTmWLAAAAAAAAgD/U8tHlenu1Gmi9Wmo1AS0Ht4pQa/j749lc6MV8VixBS8O3GDwmIiVBc8P3EPybiJiEMMqbt+YIOT/osfu5dU/W7u93m22twg/H86nGFHx6CmHU7ufWH8Q5U0tj+g/cTwACEIAABCAAAQhAAAIQgAAEIAABCEAAAiSxbpJOlyPFAkq3rNLpsjT8wmKv3U8KGGUKYjnYDgv3AcKFiDi+EQIAAAAAAHDJG5F5VogoNx+GAAAAAElFTkSuQmCC"],
+				    Source0 = #table(type table [Couleur = text, Teinte = text, Ordre = Int64.Type], {
+				        {"Noir", "#2B2E34", 1}, {"Rouge", "#C8323C", 2}, {"Bleu", "#3C6FC4", 3}, {"Vert anglais", "#1F6B48", 4},
+				        {"Argent", "#C4C9D1", 5}, {"Bleu nuit", "#1E2F5E", 6}, {"Vert", "#3FA060", 7}, {"Jaune canari", "#F2C230", 8},
+				        {"Pourpre", "#6A2C70", 9}, {"Rose", "#E58FB4", 10}, {"Non renseignée", "#9AA3B2", 11}}),
+				    Source = Table.AddColumn(Source0, "Pastille", each Record.Field(Pastilles, [Couleur]), type text)
+				in
+				    Source
+
+	annotation PBI_ResultType = Table

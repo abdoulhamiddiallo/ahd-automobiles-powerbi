@@ -1,0 +1,12 @@
+/// Instance SQL Server qui héberge la base PrestigeCars.
+expression Serveur = "localhost" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 8ec00af2-73b9-5590-97fd-6cc27e279cfd
+
+	annotation PBI_ResultType = Text
+
+/// Nom de la base de données SQL Server.
+expression Base = "PrestigeCars" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: bebf50b9-c2b7-5ae8-a1c4-1d49e124b917
+
+	annotation PBI_ResultType = Text
+

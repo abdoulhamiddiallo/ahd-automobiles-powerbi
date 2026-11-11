@@ -1,0 +1,50 @@
+table F_BudgetCouleur
+	lineageTag: 5a26ee35-93ca-5259-a223-087a38ba57a5
+
+	column 'Année'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: f74a93b6-5d7d-55a3-900a-2e1ed175cd8d
+		summarizeBy: none
+		sourceColumn: Annee
+
+		annotation SummarizationSetBy = Automatic
+
+	column Couleur
+		dataType: string
+		isHidden
+		lineageTag: 2566e124-86b8-5bdf-a4ed-303bdda5213f
+		summarizeBy: none
+		sourceColumn: Couleur
+
+		annotation SummarizationSetBy = Automatic
+
+	column Montant
+		dataType: double
+		formatString: #,0" £"
+		isHidden
+		lineageTag: dba9cc61-bd41-534f-adde-b2ce8ddab84b
+		summarizeBy: none
+		sourceColumn: Montant
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_BudgetCouleur = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    B0 = Source{[Schema = "Reference", Item = "Budget"]}[Data],
+				    Coul = Table.SelectRows(B0, each Text.Trim([BudgetElement]) = "Color"),
+				    Lignes = List.Transform(Table.ToRecords(Coul), (r) => [Annee = r[Year], Couleur = CouleurFr(r[BudgetDetail]), Montant = N(r[BudgetValue])]),
+				    Tableau = Table.Group(Table.FromRecords(Lignes), {"Annee", "Couleur"}, {{"Montant", each List.Sum([Montant]), type number}}),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Annee", Int64.Type}, {"Couleur", type text}, {"Montant", type number}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

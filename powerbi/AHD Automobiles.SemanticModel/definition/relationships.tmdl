@@ -1,0 +1,44 @@
+relationship 7db6808b-330f-53e6-b46e-3c6608ffb2dd
+	fromColumn: F_Ventes.Date
+	toColumn: D_Date.Date
+
+relationship 52b60321-fcb7-54a4-8913-032812254e16
+	fromColumn: F_Ventes.ModeleID
+	toColumn: D_Modele.ModeleID
+
+relationship bb817d73-f593-5127-b53c-5d96b919ea55
+	fromColumn: F_Ventes.ClientID
+	toColumn: D_Client.ClientID
+
+relationship 13430dda-66c0-5552-9c2f-3f5f662c9054
+	fromColumn: F_Ventes.Couleur
+	toColumn: D_Couleur.Couleur
+
+relationship 4117b7d5-48d8-5ec8-9488-eb9cd33ca2cc
+	fromColumn: D_Client.ISO2
+	toColumn: D_Pays.ISO2
+
+relationship 63d4f439-70e7-5298-9142-226f4bc26021
+	fromColumn: F_Stock.ModeleID
+	toColumn: D_Modele.ModeleID
+
+relationship c7a86126-f5ef-59b1-9b3a-fe6af6305ca1
+	fromColumn: F_Stock.Couleur
+	toColumn: D_Couleur.Couleur
+
+relationship 51d458f4-75bb-521b-8bd9-12fcc682eda1
+	fromColumn: F_BudgetTotal.Date
+	toColumn: D_Date.Date
+
+relationship 6725f8c4-d14d-58d2-aafe-dff035799497
+	fromColumn: F_BudgetPays.Date
+	toColumn: D_Date.Date
+
+relationship 8109c892-b8fa-584e-8a52-b96e49c8275f
+	fromColumn: F_BudgetPays.ISO2
+	toColumn: D_Pays.ISO2
+
+relationship 8d32d948-e39b-5576-bafe-2d8d501eebeb
+	fromColumn: F_BudgetCouleur.Couleur
+	toColumn: D_Couleur.Couleur
+

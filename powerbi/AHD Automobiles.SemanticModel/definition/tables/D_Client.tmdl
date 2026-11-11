@@ -1,0 +1,95 @@
+table D_Client
+	lineageTag: 773f258e-3d2f-5c7c-a77f-6b9b87792b2d
+
+	column ClientID
+		dataType: string
+		isHidden
+		lineageTag: b8617e81-3dc6-56ec-9ae2-8752b666494a
+		summarizeBy: none
+		sourceColumn: ClientID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Client
+		dataType: string
+		lineageTag: dd3f2e9a-f0e5-5d1a-9f50-aff604fceed8
+		summarizeBy: none
+		sourceColumn: Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ville
+		dataType: string
+		lineageTag: bba6a408-923f-52c1-b727-902eb4ef2319
+		summarizeBy: none
+		sourceColumn: Ville
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISO2
+		dataType: string
+		isHidden
+		lineageTag: 15411ce2-4344-5b0c-835d-a56bb80320e9
+		summarizeBy: none
+		sourceColumn: ISO2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Type de client'
+		dataType: string
+		lineageTag: 899572ff-5260-5729-b79e-050eba2dc91f
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Risque de crédit'
+		dataType: string
+		lineageTag: f2eb61a7-5aad-52a6-b335-9a60f54eb308
+		summarizeBy: none
+		sourceColumn: Risque
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capacité de dépense'
+		dataType: string
+		lineageTag: 7824432a-887a-529b-909f-bf6cb1e27780
+		summarizeBy: none
+		sourceColumn: Capacite
+		sortByColumn: 'Ordre capacité'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordre capacité'
+		dataType: int64
+		formatString: 0
+		isHidden
+		lineageTag: 29e0ebbe-9098-55a9-867a-6e2a6cdcf88e
+		summarizeBy: none
+		sourceColumn: CapaciteOrdre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition D_Client = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    Clients0 = Source{[Schema = "Data", Item = "Customer"]}[Data],
+				    Mkt0 = Table.Distinct(Source{[Schema = "Reference", Item = "MarketingInformation"]}[Data], {"CUST"}),
+				    CapFr = [Immense = {"Très forte", 1}, Lots = {"Forte", 2}, Some = {"Moyenne", 3}, None = {"Faible", 4}],
+				    CapDe = (nom) => let r = Table.SelectRows(Mkt0, each Text.Trim([CUST]) = nom) in if Table.IsEmpty(r) then {"Non renseignée", 5} else Record.FieldOrDefault(CapFr, Text.Trim(r{0}[SpendCapacity]), {"Non renseignée", 5}),
+				    Lignes = List.Transform(Table.ToRecords(Clients0), (r) => let nom = T(r[CustomerName]), cap = CapDe(nom) in
+				        [ClientID = T(r[CustomerID]), Client = nom, Ville = T(r[Town]), ISO2 = T(r[Country]),
+				         Type = if r[IsReseller] = true then "Revendeur" else "Particulier",
+				         Risque = if r[IsCreditRisk] = true then "Oui" else "Non", Capacite = cap{0}, CapaciteOrdre = cap{1}]),
+				    Tableau = Table.FromRecords(Lignes),
+				    Types = Table.TransformColumnTypes(Tableau, {{"ClientID", type text}, {"Client", type text}, {"Ville", type text}, {"ISO2", type text}, {"Type", type text}, {"Risque", type text}, {"Capacite", type text}, {"CapaciteOrdre", Int64.Type}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

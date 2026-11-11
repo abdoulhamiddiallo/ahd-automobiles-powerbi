@@ -1,0 +1,52 @@
+table F_BudgetPays
+	lineageTag: 7ef83a28-caab-52a9-a085-fa340667695a
+
+	column Date
+		dataType: dateTime
+		formatString: mmm yyyy
+		isHidden
+		lineageTag: 530e6101-c53c-53ab-a72b-708cf68b8a9f
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISO2
+		dataType: string
+		isHidden
+		lineageTag: f15150db-299a-5d75-b207-af075c1d9d6a
+		summarizeBy: none
+		sourceColumn: ISO2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Montant
+		dataType: double
+		formatString: #,0" £"
+		isHidden
+		lineageTag: 2f141282-26da-5198-94df-3b3ca2a5cd53
+		summarizeBy: none
+		sourceColumn: Montant
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_BudgetPays = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    B0 = Source{[Schema = "Reference", Item = "Budget"]}[Data],
+				    Pays0 = Source{[Schema = "Data", Item = "Country"]}[Data],
+				    IsoDe = Record.FromList(List.Transform(Pays0[CountryISO2], each Text.Trim(_)), List.Transform(Pays0[CountryName], each Text.Trim(_))),
+				    Pays = Table.SelectRows(B0, each Text.Trim([BudgetElement]) = "Country" and [Month] <> null),
+				    Lignes = List.Transform(Table.ToRecords(Pays), (r) => [Date = #date(r[Year], r[Month], 1), ISO2 = Record.FieldOrDefault(IsoDe, Text.Trim(r[BudgetDetail]), null), Montant = N(r[BudgetValue])]),
+				    Tableau = Table.Group(Table.FromRecords(Lignes), {"Date", "ISO2"}, {{"Montant", each List.Sum([Montant]), type number}}),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Date", type date}, {"ISO2", type text}, {"Montant", type number}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table

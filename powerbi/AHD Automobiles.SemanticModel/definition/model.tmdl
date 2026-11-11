@@ -1,0 +1,30 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: fr-FR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["F_Ventes", "F_Stock", "D_Modele", "D_Pays", "D_Client", "D_Couleur", "D_Date", "F_BudgetTotal", "F_BudgetPays", "F_BudgetCouleur", "D_Indicateur", "D_Etape", "Serveur", "Base"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+ref table F_Ventes
+ref table F_Stock
+ref table D_Modele
+ref table D_Pays
+ref table D_Client
+ref table D_Couleur
+ref table D_Date
+ref table F_BudgetTotal
+ref table F_BudgetPays
+ref table F_BudgetCouleur
+ref table D_Indicateur
+ref table D_Etape
+ref table Metrics
+
+ref cultureInfo fr-FR

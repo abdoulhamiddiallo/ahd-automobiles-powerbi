@@ -1,0 +1,41 @@
+table F_BudgetTotal
+	lineageTag: d23e16b0-3f61-5083-810c-4c4bcad54f26
+
+	column Date
+		dataType: dateTime
+		formatString: mmm yyyy
+		isHidden
+		lineageTag: 5b306b1d-e701-5be5-b64c-a3db2934edc8
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Montant
+		dataType: double
+		formatString: #,0" £"
+		isHidden
+		lineageTag: 9eeaaea5-d8ac-5a17-bfdf-8cfb53eb816c
+		summarizeBy: none
+		sourceColumn: Montant
+
+		annotation SummarizationSetBy = Automatic
+
+	partition F_BudgetTotal = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database(Serveur, Base),
+				    N = (x) => if x = null then 0 else Number.From(x),
+				    T = (x) => if x = null then null else Text.Trim(Text.From(x)),
+				    CouleursFr = [#"Black" = "Noir", #"Blue" = "Bleu", #"British Racing Green" = "Vert anglais", #"Canary Yellow" = "Jaune canari", #"Dark Purple" = "Pourpre", #"Green" = "Vert", #"Night Blue" = "Bleu nuit", #"Pink" = "Rose", #"Red" = "Rouge", #"Silver" = "Argent"],
+				    CouleurFr = (c) => if c = null then "Non renseignée" else Record.FieldOrDefault(CouleursFr, Text.Trim(c), Text.Trim(c)),
+				    B0 = Source{[Schema = "Reference", Item = "Budget"]}[Data],
+				    Ventes = Table.SelectRows(B0, each Text.Trim([BudgetElement]) = "Sales" and [Month] <> null),
+				    Lignes = List.Transform(Table.ToRecords(Ventes), (r) => [Date = #date(r[Year], r[Month], 1), Montant = N(r[BudgetValue])]),
+				    Tableau = Table.Group(Table.FromRecords(Lignes), {"Date"}, {{"Montant", each List.Sum([Montant]), type number}}),
+				    Types = Table.TransformColumnTypes(Tableau, {{"Date", type date}, {"Montant", type number}}, "en-US")
+				in
+				    Types
+
+	annotation PBI_ResultType = Table
