@@ -1,0 +1,195 @@
+{
+  "name": "AHD Automobiles",
+  "dataColors": [
+    "#2563EB",
+    "#0D9488",
+    "#7C3AED",
+    "#F59E0B",
+    "#E11D48",
+    "#16A34A",
+    "#DB2777",
+    "#0EA5E9",
+    "#84CC16",
+    "#334155"
+  ],
+  "background": "#FFFFFF",
+  "backgroundLight": "#FFFFFF",
+  "backgroundNeutral": "#F1F5F9",
+  "foreground": "#0F172A",
+  "foregroundNeutralSecondary": "#475569",
+  "foregroundNeutralTertiary": "#94A3B8",
+  "tableAccent": "#1E40AF",
+  "good": "#16A34A",
+  "neutral": "#F59E0B",
+  "bad": "#E11D48",
+  "maximum": "#2563EB",
+  "center": "#93C5FD",
+  "minimum": "#F1F5F9",
+  "null": "#FFFFFF",
+  "hyperlink": "#2563EB",
+  "visitedHyperlink": "#7C3AED",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 18,
+      "color": "#0F172A"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 13,
+      "color": "#0F172A"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 13,
+      "color": "#475569"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 32,
+      "color": "#0F172A"
+    },
+    "largeTitle": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 26,
+      "color": "#0F172A"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            },
+            "radius": 12
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "outspacePane": [
+          {
+            "backgroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            }
+          }
+        ],
+        "filterCard": [
+          {
+            "$id": "Applied",
+            "backgroundColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#0F172A"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            }
+          },
+          {
+            "$id": "Available",
+            "backgroundColor": {
+              "solid": {
+                "color": "#F1F5F9"
+              }
+            },
+            "foregroundColor": {
+              "solid": {
+                "color": "#475569"
+              }
+            },
+            "borderColor": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F1F5F9"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "columnHeaders": [
+          {
+            "backColor": {
+              "solid": {
+                "color": "#1E40AF"
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
