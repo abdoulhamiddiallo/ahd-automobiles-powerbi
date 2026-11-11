@@ -1,0 +1,133 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "Fluent2-CY26SU08",
+      "reportVersionAtImport": {
+        "visual": "2.12.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "ThemePrestige",
+      "reportVersionAtImport": {
+        "visual": "2.12.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "Fluent2-CY26SU08",
+          "path": "BaseThemes/Fluent2-CY26SU08.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "bar_bleu.png",
+          "path": "bar_bleu.png",
+          "type": "Image"
+        },
+        {
+          "name": "bar_rouge.png",
+          "path": "bar_rouge.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg_couleur.png",
+          "path": "bg_couleur.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_ambre.png",
+          "path": "g_ambre.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_bleu.png",
+          "path": "g_bleu.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_rouge.png",
+          "path": "g_rouge.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_sarcelle.png",
+          "path": "g_sarcelle.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_vert.png",
+          "path": "g_vert.png",
+          "type": "Image"
+        },
+        {
+          "name": "g_violet.png",
+          "path": "g_violet.png",
+          "type": "Image"
+        },
+        {
+          "name": "logo_lux.png",
+          "path": "logo_lux.png",
+          "type": "Image"
+        },
+        {
+          "name": "ThemePrestige",
+          "path": "ThemePrestige",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}
