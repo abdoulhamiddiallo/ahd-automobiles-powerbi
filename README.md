@@ -36,6 +36,7 @@
 8. [🧰 Stack technique](#-stack-technique)
 9. [✅ Conclusion](#-conclusion)
 10. [💡 Mot de la fin](#-mot-de-la-fin)
+11. [📄 Licence](#-licence)
 
 ---
 
@@ -343,13 +344,16 @@ RETURN IF ( ISBLANK ( v ), BLANK (), IF ( v >= 0, "+" & FORMAT ( v, "0 %" ), FOR
 ```text
 ahd-automobiles-powerbi/
 ├── README.md
+├── LICENSE
 ├── docs/
+│   ├── README.md                        # guide du dossier
 │   ├── AHD_Automobiles.pdf              # le rapport complet, 7 pages
 │   ├── gifs/                            # animations des pages
 │   └── images/                          # captures des pages et diagrammes
 └── powerbi/
+    ├── README.md                        # guide du dossier
     ├── AHD Automobiles.pbip             # le fichier à ouvrir dans Power BI Desktop
-    ├── AHD Automobiles.Report.zip       # le rapport au format PBIR (7 pages, 400 visuels, thème), à décompresser
+    ├── AHD Automobiles.Report/          # le rapport au format PBIR : 7 pages, 392 visuels, thème et images
     └── AHD Automobiles.SemanticModel/   # le modèle au format TMDL, lisible directement sur GitHub
 ```
 
@@ -369,7 +373,7 @@ ahd-automobiles-powerbi/
 
 1. Installez **Power BI Desktop** (version récente, avec le format PBIP activé).
 2. Restaurez une base **`PrestigeCars`** sur votre instance **SQL Server**.
-3. Décompressez `powerbi/AHD Automobiles.Report.zip` dans le dossier `powerbi`, à côté du fichier `.pbip`, puis ouvrez `powerbi/AHD Automobiles.pbip`.
+3. Clonez ou téléchargez le dépôt, puis ouvrez `powerbi/AHD Automobiles.pbip`.
 4. Dans **Transformer les données**, réglez les paramètres **`Serveur`** (par défaut `localhost`) et **`Base`** (par défaut `PrestigeCars`).
 5. Cliquez sur **Actualiser** : les 7 pages se remplissent.
 
@@ -394,6 +398,12 @@ AHD Automobiles montre comment transformer une base relationnelle en un outil de
 ## 💡 Mot de la fin
 
 > Un bon tableau de bord ne montre pas tout. Il montre d'abord ce qui compte, dit tout de suite si c'est une bonne ou une mauvaise nouvelle, et laisse ensuite chacun creuser jusqu'au détail qui l'intéresse.
+
+---
+
+## 📄 Licence
+
+Ce projet est publié sous licence [MIT](LICENSE) : vous pouvez le réutiliser librement en citant l'auteur.
 
 ---
 
