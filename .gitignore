@@ -1,0 +1,4 @@
+# Power BI : fichiers locaux, jamais versionnés (le cache contient les données)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+**/.pbi/editorSettings.json
