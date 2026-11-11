@@ -18,7 +18,7 @@
 
 <img src="docs/gifs/synthese.gif" alt="Page Synthèse du tableau de bord AHD Automobiles" width="100%">
 
-📄 [**Le rapport complet en PDF**](docs/AHD_Automobiles.pdf) &nbsp;·&nbsp; 🎬 [**La vidéo de présentation (1 min 20)**](docs/video/AHD_Automobiles_LinkedIn.mp4) &nbsp;·&nbsp; 🧬 [**Le modèle sémantique**](#-architecture)
+📄 [**Le rapport complet en PDF**](docs/AHD_Automobiles.pdf) &nbsp;·&nbsp; 🧬 [**Le modèle sémantique**](#-architecture)
 
 </div>
 
@@ -152,7 +152,7 @@ Les chiffres ci-dessous sont ceux que le tableau de bord met en avant sur l'ense
 | 2 | **Power Query (M)** | Jointure des ventes et du stock, calcul du coût total, de la marge et des jours en stock, gammes de prix, traduction des couleurs et des catégories en français, correction de l'origine de certaines marques, rattachement des modèles hors catalogue, logos et drapeaux convertis en images. |
 | 3 | **Modèle sémantique** | Schéma en étoile, calendrier généré, relations à sens unique, 207 mesures DAX rangées en 8 dossiers. |
 | 4 | **Rapport Power BI** | 7 pages, thème sur mesure, couleurs dynamiques pilotées par des mesures, interactions croisées. |
-| 5 | **Diffusion** | Export PDF, vidéo de présentation, projet PBIP versionné. |
+| 5 | **Diffusion** | Export PDF, projet PBIP versionné. |
 
 Le serveur et la base sont deux **paramètres** du modèle (`Serveur`, `Base`) : il suffit de les changer pour pointer vers une autre instance.
 
@@ -345,9 +345,8 @@ ahd-automobiles-powerbi/
 ├── README.md
 ├── docs/
 │   ├── AHD_Automobiles.pdf              # le rapport complet, 7 pages
-│   ├── gifs/                            # animations tirées de la vidéo
-│   ├── images/                          # captures des pages et diagrammes
-│   └── video/AHD_Automobiles_LinkedIn.mp4
+│   ├── gifs/                            # animations des pages
+│   └── images/                          # captures des pages et diagrammes
 └── powerbi/
     ├── AHD Automobiles.pbip             # le fichier à ouvrir dans Power BI Desktop
     ├── AHD Automobiles.Report.zip       # le rapport au format PBIR (7 pages, 400 visuels, thème), à décompresser
