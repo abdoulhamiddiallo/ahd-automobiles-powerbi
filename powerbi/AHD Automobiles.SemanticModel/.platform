@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "AHD Automobiles"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7f7ff2d8-166d-5b2e-a5b6-f6c0d09cfae6"
+  }
+}
